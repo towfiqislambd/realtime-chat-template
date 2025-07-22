@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
   const [token, setToken, clearToken] = useLocalStorage("token", null);
+  console.log(token);
   const {
     data: userData = [],
     isLoading: loadingUserData,

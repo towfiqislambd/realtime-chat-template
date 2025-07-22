@@ -16,47 +16,11 @@ export const RegisterFunc = async payload => {
 // login:
 export const LoginFunc = async payload => {
   const { data } = await axiosPublic.post("/api/users/login", payload);
-  return data;
+  return data?.data;
 };
 
 // logout:
 export const LogOutFunc = async () => {
   const { data } = await axiosSecure.post("/api/users/logout");
-  return data?.data;
-};
-
-// verify email:
-export const VerifyEmailFunc = async payload => {
-  const { data } = await axiosPublic.post(
-    "/api/users/login/email-verify",
-    payload
-  );
-  return data?.data;
-};
-
-// otp verify:
-export const OtpVerifyFunc = async payload => {
-  const { data } = await axiosPublic.post(
-    "/api/users/login/otp-verify",
-    payload
-  );
-  return data?.data;
-};
-
-// otp resend:
-export const OtpResendFunc = async payload => {
-  const { data } = await axiosPublic.post(
-    "/api/users/login/otp-resend",
-    payload
-  );
-  return data?.data;
-};
-
-// reset password::
-export const ResetPasswordFunc = async payload => {
-  const { data } = await axiosPublic.post(
-    "/api/users/login/reset-password",
-    payload
-  );
   return data?.data;
 };

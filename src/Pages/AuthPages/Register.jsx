@@ -16,6 +16,12 @@ const Register = () => {
       password,
       name: "user",
       password_confirmation: password,
+      first_name: "Towfiq",
+      last_name: "Islam",
+      role: "customer",
+      number: "345345",
+      country: "BD",
+      agree_to_terms: 1,
     };
     await registrationMutation(data);
   };

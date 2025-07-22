@@ -5,6 +5,8 @@ import Register from "@/Pages/AuthPages/Register";
 import ErrorPage from "@/Pages/ErrorPage/ErrorPage";
 import Home from "@/Pages/MainPages/Home";
 import { createBrowserRouter } from "react-router-dom";
+import ChatLayout from "../Layout/ChatLayout";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   // Main Layout
@@ -35,6 +37,16 @@ const router = createBrowserRouter([
         element: <Login />,
       },
     ],
+  },
+
+  // Chat Layout
+  {
+    path: "/chat",
+    element: (
+      <PrivateRoute>
+        <ChatLayout />
+      </PrivateRoute>
+    ),
   },
 ]);
 

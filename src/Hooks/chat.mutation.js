@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { postMessage } from "./chat.api";
-import { toast } from "react-toastify"; // If you're using toast
+import toast from "react-hot-toast";
 
 const usePostMessage = () => {
   const queryClient = useQueryClient();

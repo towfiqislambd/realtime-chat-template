@@ -4,11 +4,7 @@ import {
   GetUserDataFunc,
   LoginFunc,
   LogOutFunc,
-  OtpResendFunc,
-  OtpVerifyFunc,
   RegisterFunc,
-  ResetPasswordFunc,
-  VerifyEmailFunc,
 } from "./auth.api";
 import toast from "react-hot-toast";
 import useAuth from "./useAuth";
@@ -95,105 +91,6 @@ export const useLogOut = () => {
       toast.success("User Logged out Successfully");
     },
     onError: err => {
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// verify email:
-export const useVerifyEmail = () => {
-  const { setLoading } = useAuth();
-  const navigate = useNavigate();
-
-  return useMutation({
-    mutationKey: ["verify-email"],
-    mutationFn: payload => VerifyEmailFunc(payload),
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSuccess: data => {
-      if (data?.email) {
-        navigate("/auth/verify-otp", { state: { email: data.email } });
-        setLoading(false);
-        toast.success("Otp sent to your email address");
-      }
-    },
-    onError: err => {
-      setLoading(false);
-      toast.error(err?.response?.data?.data?.email?.[0]);
-    },
-  });
-};
-
-// verify otp:
-export const useVerifyOtp = reset => {
-  const { setLoading } = useAuth();
-  const navigate = useNavigate();
-
-  return useMutation({
-    mutationKey: ["verify-otp"],
-    mutationFn: payload => OtpVerifyFunc(payload),
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSuccess: data => {
-      if (data) {
-        setLoading(false);
-        toast.success("Otp verified successfully");
-        navigate("/auth/reset-password", {
-          state: { email: data.email, key: data?.password_reset_token },
-        });
-      }
-    },
-    onError: err => {
-      setLoading(false);
-      reset();
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// otp resend:
-export const useResendOtp = () => {
-  const { setLoading } = useAuth();
-
-  return useMutation({
-    mutationKey: ["resend-otp"],
-    mutationFn: payload => OtpResendFunc(payload),
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSuccess: () => {
-      setLoading(false);
-      toast.success("New OTP sent to your email");
-    },
-    onError: err => {
-      setLoading(false);
-      toast.error(err?.response?.data?.message);
-    },
-  });
-};
-
-// reset password:
-export const useResetPassword = () => {
-  const { setLoading } = useAuth();
-  const navigate = useNavigate();
-
-  return useMutation({
-    mutationKey: ["reset-password"],
-    mutationFn: payload => ResetPasswordFunc(payload),
-    onMutate: () => {
-      setLoading(true);
-    },
-    onSuccess: data => {
-      if (data) {
-        setLoading(false);
-        toast.success("Password reset successfully");
-        navigate("/auth/login");
-      }
-    },
-    onError: err => {
-      setLoading(false);
       toast.error(err?.response?.data?.message);
     },
   });
