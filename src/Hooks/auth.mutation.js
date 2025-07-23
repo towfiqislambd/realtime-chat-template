@@ -62,7 +62,7 @@ export const useLogin = () => {
       if (data?.success) {
         if (data?.data?.token) {
           setToken(data?.data?.token);
-          navigate("/dashboard");
+          navigate("/chat");
         }
       }
     },

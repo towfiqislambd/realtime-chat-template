@@ -16,7 +16,7 @@ export const RegisterFunc = async payload => {
 // login:
 export const LoginFunc = async payload => {
   const { data } = await axiosPublic.post("/api/users/login", payload);
-  return data?.data;
+  return data;
 };
 
 // logout:
