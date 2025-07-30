@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   GetUserDataFunc,
   LoginFunc,
@@ -46,20 +46,15 @@ export const useRegister = () => {
 
 // Login:
 export const useLogin = () => {
-  const { setLoading, setToken } = useAuth();
+  const { setToken } = useAuth();
   const navigate = useNavigate();
-  const location = useLocation();
 
   return useMutation({
     mutationKey: ["login"],
     mutationFn: payload => LoginFunc(payload),
-    onMutate: () => {
-      setLoading(true);
-    },
     onSuccess: data => {
-      setLoading(false);
       toast.success("Login Successful");
-      if (data?.success) {
+      if (data?.status) {
         if (data?.data?.token) {
           setToken(data?.data?.token);
           navigate("/chat");
@@ -67,7 +62,6 @@ export const useLogin = () => {
       }
     },
     onError: err => {
-      setLoading(false);
       toast.error(err?.response?.data?.message);
     },
   });

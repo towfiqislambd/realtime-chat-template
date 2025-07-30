@@ -9,20 +9,19 @@ const Register = () => {
     e.preventDefault();
     const form = e.currentTarget;
     const formData = new FormData(form);
+    const name = formData.get("name");
     const email = formData.get("email");
     const password = formData.get("password");
+    const password_confirmation = formData.get("password");
+
     const data = {
+      name,
       email,
       password,
-      name: "user",
-      password_confirmation: password,
-      first_name: "Towfiq",
-      last_name: "Islam",
-      role: "customer",
-      number: "345345",
-      country: "BD",
+      password_confirmation,
       agree_to_terms: 1,
     };
+
     await registrationMutation(data);
   };
 
@@ -34,6 +33,20 @@ const Register = () => {
         </h4>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block mb-1 text-sm">
+              Name
+            </label>
+            <input
+              className="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2 shadow-inner focus:outline-none focus:ring-2 focus:ring-primary"
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              required
+            />
+          </div>
+
           <div>
             <label htmlFor="email" className="block mb-1 text-sm">
               Email
