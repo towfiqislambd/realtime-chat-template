@@ -13,7 +13,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "@tanstack/react-query": "^5.83.0",
     "axios": "^1.10.0",
-    "laravel-echo": "^2.1.6",
+    "laravel-echo": "^2.1.7",
     "moment": "^2.30.1",
     "pusher-js": "^8.4.0",
     "react": "^19.1.0",
