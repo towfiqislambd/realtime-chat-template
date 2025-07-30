@@ -1,21 +1,19 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { postMessage } from "./chat.api";
+import { SendMessage } from "./chat.api";
 import toast from "react-hot-toast";
 
-const usePostMessage = () => {
+export const useSendMessage = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({ id, payload }) => postMessage(id, payload),
+    mutationFn: payload => SendMessage(payload),
     onSuccess: data => {
-      if (data) {
-        queryClient.invalidateQueries(["single-chat"]);
-      }
+      console.log(data);
+      queryClient.invalidateQueries(["get-all-conversations"]);
+      queryClient.invalidateQueries(["get-single-conversation"]);
     },
     onError: error => {
       toast.error(error?.response?.data?.message || "Message sending failed");
     },
   });
 };
-
-export default usePostMessage;

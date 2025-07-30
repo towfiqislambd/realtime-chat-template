@@ -1,41 +1,21 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosSecure from "./useAxiosSecure";
+import { GetAllConversations, GetSingleConversation } from "./chat.api";
 
-export const useChatConversion = () => {
-  const axiosSecure = useAxiosSecure();
-
-  const {
-    data: chats,
-    isLoading: chatLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["chat-lists"],
+// Get All Conversations
+export const useGetAllConversations = () => {
+  return useQuery({
+    queryKey: ["get-all-conversations"],
+    queryFn: GetAllConversations,
     retry: false,
-    queryFn: async () => {
-      const response = await axiosSecure.get(`/api/conversations`);
-      return response.data;
-    },
   });
-
-  return { chats, chatLoading, refetch };
 };
 
-export const useSingleChatConversion = userId => {
-  const axiosSecure = useAxiosSecure();
-
-  const {
-    data: singleConversion,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["single-chat", userId],
-    queryFn: async () => {
-      const response = await axiosSecure.get(`/api/chat/${userId}`);
-      return response.data;
-    },
+// Get Single Conversations
+export const useGetSingleConversation = receiver_id => {
+  return useQuery({
+    queryKey: ["get-single-conversation", receiver_id],
+    queryFn: () => GetSingleConversation(receiver_id),
+    enabled: !!receiver_id,
     retry: false,
-    enabled: !!userId,
   });
-
-  return { singleConversion, isLoading, refetch };
 };
