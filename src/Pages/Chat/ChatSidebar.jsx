@@ -1,26 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
 import { useGetAllConversations } from "../../Hooks/chat.queries";
+import { CiSearch } from "react-icons/ci";
 
 const ChatSidebar = ({ setChatId }) => {
+  const [search, setSearch] = useState("");
   const { data: allConversation, isLoading } = useGetAllConversations();
 
   return (
-    <div className="w-80 border-r border-gray-200 bg-white">
-      {isLoading
-        ? [1, 2, 3, 4].map((_, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-3 p-3 rounded-lg animate-pulse bg-gray-100"
-            >
-              <div className="size-12 rounded-full bg-gray-300" />
-              <div className="flex-1 space-y-2">
-                <div className="h-3 w-24 bg-gray-300 rounded"></div>
-                <div className="h-3 w-32 bg-gray-200 rounded"></div>
-              </div>
+    <section className="w-80 border-r border-gray-200 bg-white">
+      {isLoading ? (
+        [1, 2, 3, 4].map((_, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 p-3 rounded-lg animate-pulse bg-gray-100"
+          >
+            <div className="size-12 rounded-full bg-gray-300" />
+            <div className="flex-1 space-y-2">
+              <div className="h-3 w-24 bg-gray-300 rounded"></div>
+              <div className="h-3 w-32 bg-gray-200 rounded"></div>
             </div>
-          ))
-        : allConversation?.conversations?.data?.map(item =>
+          </div>
+        ))
+      ) : (
+        <div>
+          <div className="mx-3 mb-4 space-y-2">
+            <p className="text-xl text-gray-700 font-medium mt-4">Message</p>
+
+            {/* Search bar */}
+            <p className="flex gap-1.5 items-center bg-gray-100 px-2 py-2 rounded">
+              <CiSearch className="text-xl" />
+              <input
+                type="text"
+                placeholder="Search here..."
+                onChange={e => setSearch(e.target.value)}
+                className="border-none outline-none w-full"
+              />
+            </p>
+          </div>
+
+          {/* Chat List */}
+          {allConversation?.conversations?.data?.map(item =>
             item?.participants?.map((data, idx) => (
               <div
                 key={idx}
@@ -72,7 +92,9 @@ const ChatSidebar = ({ setChatId }) => {
               </div>
             ))
           )}
-    </div>
+        </div>
+      )}
+    </section>
   );
 };
 

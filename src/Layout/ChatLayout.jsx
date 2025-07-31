@@ -5,7 +5,8 @@ import ChatBody from "../Pages/Chat/ChatBody";
 
 const ChatLayout = () => {
   const [chatId, setChatId] = useState(null);
-  const { data: singleConversation, isLoading } = useGetSingleConversation(chatId);
+  const { data: singleConversation, isLoading } =
+    useGetSingleConversation(chatId);
 
   return (
     <section className="flex h-screen bg-gray-50">
