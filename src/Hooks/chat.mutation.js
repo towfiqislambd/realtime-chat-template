@@ -7,8 +7,7 @@ export const useSendMessage = () => {
 
   return useMutation({
     mutationFn: payload => SendMessage(payload),
-    onSuccess: data => {
-      console.log(data);
+    onSuccess: () => {
       queryClient.invalidateQueries(["get-all-conversations"]);
       queryClient.invalidateQueries(["get-single-conversation"]);
     },

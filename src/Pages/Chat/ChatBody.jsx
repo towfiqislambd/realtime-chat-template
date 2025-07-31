@@ -26,9 +26,40 @@ const ChatBody = ({ chatId, chatData, isLoading }) => {
 
   const handleSend = () => {
     if (!message.trim() || !chatId) return;
-    const data = { receiver_id: chatId, message };
-    sendMessage(data);
+
+    const tempId = `temp-${Date.now()}`;
+    const tempMessage = {
+      id: tempId,
+      sender_id: user.id,
+      receiver_id: chatId,
+      type: "text",
+      message: message.trim(),
+      created_at: new Date().toISOString(),
+      status: "sending",
+    };
+
+    setConversations(prev => [...prev, tempMessage]);
     setMessage("");
+
+    const payload = { receiver_id: chatId, message };
+    sendMessage(payload, {
+      onSuccess: data => {
+        setConversations(prev =>
+          prev.map(msg =>
+            msg.id === tempId
+              ? { ...msg, ...data.message, status: "sent" }
+              : msg
+          )
+        );
+      },
+      onError: () => {
+        setConversations(prev =>
+          prev.map(msg =>
+            msg.id === tempId ? { ...msg, status: "failed" } : msg
+          )
+        );
+      },
+    });
   };
 
   return (
