@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import moment from "moment";
 import { useGetAllConversations } from "../../Hooks/chat.queries";
 import { CiSearch } from "react-icons/ci";
+import { useNavigate } from "react-router-dom";
+import { IoArrowBackOutline } from "react-icons/io5";
 
 const ChatSidebar = ({ setChatId }) => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const { data: allConversation, isLoading } = useGetAllConversations();
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <section className="w-80 border-r border-gray-200 bg-white">
@@ -23,9 +29,20 @@ const ChatSidebar = ({ setChatId }) => {
           </div>
         ))
       ) : (
-        <div>
+        <>
           <div className="mx-3 mb-4 space-y-2">
-            <p className="text-xl text-gray-700 font-medium mt-4">Message</p>
+            <div className="my-5 flex justify-between items-center">
+              <p className="text-xl text-gray-700 font-medium">Message</p>
+
+              {/* Back btn */}
+              <button
+                onClick={handleBack}
+                className="flex group gap-[2px] justify-self-end items-center justify-end text-sm cursor-pointer font-medium border rounded-full px-2.5 py-1 text-blue-500 bg-gray-100"
+              >
+                <IoArrowBackOutline className="group-hover:-translate-x-[3px] duration-300 transition-transform" />
+                <span>Go back</span>
+              </button>
+            </div>
 
             {/* Search bar */}
             <p className="flex gap-1.5 items-center bg-gray-100 px-2 py-2 rounded">
@@ -92,7 +109,7 @@ const ChatSidebar = ({ setChatId }) => {
               </div>
             ))
           )}
-        </div>
+        </>
       )}
     </section>
   );
